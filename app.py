@@ -18,4 +18,4 @@ def render_tour(id):
     return render_template('tour.html')
 
 
-app.run()
+app.run(debug=True)
