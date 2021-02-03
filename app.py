@@ -60,4 +60,5 @@ def utility_processor():
                 base_title=data.title)
 
 
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run()
