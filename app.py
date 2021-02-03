@@ -13,8 +13,8 @@ def render_main():
     # Генерируем 6 случайных уникальных id туров из общей базы
     random_tours_id = sample(range(min(data.tours.keys()), max(data.tours.keys())), 6)
     # Формируем словарь туров из полученных id
-    for i in random_tours_id:
-        random_tours[i] = data.tours[i]
+    for tour in random_tours_id:
+        random_tours[tour] = data.tours[tour]
     return render_template('index.html',
                            random_tours=random_tours,
                            title=data.title,
