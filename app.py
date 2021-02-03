@@ -1,6 +1,6 @@
 from random import sample
 
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 
 import data
 
@@ -25,6 +25,8 @@ def render_main():
 
 @app.route('/departures/<departure>/')
 def render_departure(departure):
+    if departure not in data.departures:
+        abort(404)
     sorted_departures = {}
     # Сортируем и формируем словарь туров по параметру departure
     for tour in data.tours:
@@ -39,8 +41,11 @@ def render_departure(departure):
 
 @app.route('/tours/<int:tour_id>/')
 def render_tour(tour_id):
-    # Получаем тур и направление из базы по tour_id
-    tour = data.tours[tour_id]
+    # Пытаемся получить тур и направление из базы по tour_id. Если не находим, поднимаем 404
+    try:
+        tour = data.tours[tour_id]
+    except KeyError:
+        abort(404)
     tour_departure = data.departures[(tour['departure'])]
     return render_template('tour.html',
                            tour=tour,
